@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/admin.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/loader.css')}}">
+</head>
+
+<body class="body">
+    <header class="header">
+        <ul>
+            <li>
+                <form method="GET" action="/cursos">
+                    <input class="btn btn-primary float-end text-center" type="submit" value="Atrás">
+                </form>
+            </li>
+            <li><img src="{{url_for('static',filename='/img/logoColor_banner.png')}}" alt="Logo UTEM"></li>
+            <li>
+                <h1 class="h1">Administrar</h1>
+            </li>
+            <li>
+                <form action="/logout" method="post">
+                    <button type="submit" class="btn btn-secondary">Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+        <!-- Maneja mensajes flash -->
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div class="etiquetas">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">Alumno</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                        type="button" role="tab" aria-controls="nav-profile" aria-selected="false"></button>
+                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                        type="button" role="tab" aria-controls="nav-contact" aria-selected="false"></button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active padding-page contenedor" id="nav-home" role="tabpanel"
+                    aria-labelledby="nav-home-tab" tabindex="0">
+                    <div class="izquierda flex-fill">
+                        <!-- Formulario para buscar al alumno -->
+                        <h2>Buscar Alumno:</h2>
+                        <form action="/buscar_alumno" method="post">
+                            <div class="mb-3">
+                                <label for="rutInput" class="form-label">Rut sin puntos ni guión:</label>
+                                <input type="text" class="form-control" id="rutInput" name="rut" placeholder="12345678"
+                                    maxlength="8">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </form>
+                        <!-- Sección para mostrar un mensaje cuando no se encuentren resultados -->
+                        {% if resultados %}
+                        {% if not resultados.resultados %}
+                        <div class="alert alert-info" role="alert">
+                            No se encuentra alumno con el rut proporcionado.
+                        </div>
+                        {% else %}
+                        <!-- Mostrar los resultados de la búsqueda -->
+                        <div class="alert alert-info" role="alert">
+                            {% for alumno in resultados.resultados %}
+                            Alumno encontrado: {{ alumno.nombre }} {{ alumno.apellido }}
+                            {% endfor %}
+                            {% if resultados.train_found %}
+                            - Entrenamiento encontrado.
+                            <form action="/eliminar_entrenamiento" method="post">
+                                <input type="hidden" name="rut" value="{{ resultados.resultados[0].rut }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                            {% else %}
+                            - No se encuentra entrenamiento.
+                            <form action="/entrenar" method="post" id="entrenar_form">
+                                <input type="hidden" name="rut" value="{{ resultados.resultados[0].rut }}">
+                                <button type="submit" class="btn btn-primary" id="entrenar_button">Entrenar</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="derecha flex-fill">
+                        <!-- Formulario para agregar un nuevo alumno -->
+                        <h2>Agregar Nuevo Alumno:</h2>
+                        <form action="/crear_alumno" method="post">
+                            <div class="mb-3">
+                                <label for="nombreInput" class="form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="nombreInput" name="nombre"
+                                    placeholder="Ingrese el Nombre">
+                            </div>
+                            <div class="mb-3">
+                                <label for="apellidoInput" class="form-label">Apellido:</label>
+                                <input type="text" class="form-control" id="apellidoInput" name="apellido"
+                                    placeholder="Ingrese el Apellido">
+                            </div>
+                            <div class="mb-3">
+                                <label for="rutNuevoInput" class="form-label">Rut:</label>
+                                <input type="text" class="form-control" id="rutNuevoInput" name="rut_nuevo"
+                                    placeholder="Ingrese el Rut" maxlength="8">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Agregar Alumno</button>
+                        </form>
+                    </div>
+                    <div id="contenedor" class="invisible">
+                        <div class="contenedor-loader">
+                            <div class="rueda"></div>
+                            <div class="texto-cargando">Entrenando...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade padding-page" id="nav-profile" role="tabpanel"
+                    aria-labelledby="nav-profile-tab" tabindex="0">...</div>
+                <div class="tab-pane fade padding-page" id="nav-contact" role="tabpanel"
+                    aria-labelledby="nav-contact-tab" tabindex="0">...</div>
+            </div>
+
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="../static/js/admin.js"></script>
+</body>
+
+</html>

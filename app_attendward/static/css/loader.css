@@ -1,0 +1,40 @@
+#contenedor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.5); /* Añade un fondo semitransparente */
+  z-index: 999; /* Asegura que esté encima de otros elementos */
+}
+
+.contenedor-loader {
+  text-align: center;
+  justify-content: center;
+}
+
+.rueda {
+  border: 10px solid rgb(107, 150, 243);
+  border-radius: 50%;
+  border-left-color: transparent;
+  width: 80px;
+  height: 80px;
+  animation: giro 1s linear infinite;
+}
+
+.texto-cargando {
+  margin-top: 20px;
+}
+
+@keyframes giro {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

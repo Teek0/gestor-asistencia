@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de cursos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/styles.css')}}">
+</head>
+
+<body class="body">
+    <header class="header">
+        <ul>
+            <li><img src="{{url_for('static',filename='/img/logoColor_banner.png')}}" alt="Logo UTEM"></li>
+            <li>
+                <h1 class="h1">Cursos disponibles</h1>
+            </li>
+            <li class="botones_header_cursos">
+                <form action="/admin" method="get">
+                    <button type="submit" class="btn btn-secondary">Administrar</button>
+                </form>
+                <form action="/logout" method="post">
+                    <button type="submit" class="btn btn-secondary">Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </header>
+    <main>
+        <div class="cursos">
+            <table>
+                <caption></caption>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Sección</th>
+                    <th>Horario</th>
+                    <th>Acciones</th>
+                </tr>
+                {% for curso in cursos %}
+                <tr>
+                    <td>{{ curso.nombre_asignatura }}</td>
+                    <td>{{ curso.seccion }}</td>
+                    <td>{{ curso.horario }}</td>
+                    <td>
+                        <a href="{{ url_for('get_alumnos_by_section_on_date', section_id=curso.id_seccion) }}" class="btn btn-primary">Tomar asistencia</a>
+                        <a href="{{ url_for('get_alumnos_by_section', section_id=curso.id_seccion) }}" class="btn btn-info btn-sm">Agregar alumnos</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

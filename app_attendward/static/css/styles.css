@@ -1,0 +1,163 @@
+.body {
+    background-color: #E1EBFF;
+}
+
+/* Login */
+.login_font{
+    color: #006388;
+    margin-bottom: 25px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 100vh;
+}
+
+.logo {
+    width: 85px;
+    height: 100px;
+}
+
+.fondo_blanco {
+    text-align: center;
+    background-color: white;
+    margin: 15px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
+}
+
+.fondo_blanco form{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    margin: 10px;
+    padding: 10px 30px;
+    border-radius: 15px;
+    border: 0px;
+    background-color: #F5F5F5;
+    font-size: small;
+    
+}
+.button{
+    margin-top: 10px;
+    padding: 10px 30px;
+    border-radius: 15px;
+    border: 0px;
+    color: white;
+    font-weight: bold;
+}
+
+.input {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #004C68;
+}
+
+.info {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 0;
+}
+
+.info img {
+    width: 15px;
+    height: 15px;
+}
+
+.info p {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+
+/* Header */
+
+.header {
+    background-color: #004C68;
+}
+
+.h1 {
+    color: white;
+}
+
+.h2 {
+    color: white;
+}
+.header ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+    align-items: center;
+}
+
+.botones_header_cursos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.botones_header_cursos button{
+    margin: 0 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+tr{
+    background-color: #edf6ff;
+}
+tr:nth-child(even) {
+    background-color: #f3fbff;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.video-container{
+    display:flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.agregarxrut{
+    display: flex;
+    flex-direction: row;
+    justify-content:left;
+    align-items: center;
+}
+
+.agregarxrut div{
+    margin: 10px;
+}
+
+/* Estilos para mensajes de éxito */
+.alert-success {
+    margin-top: 2px;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+/* Estilos para mensajes de error */
+.alert-error {
+    margin-top: 2px;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}

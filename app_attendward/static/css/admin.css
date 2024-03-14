@@ -1,0 +1,30 @@
+.padding-page {
+    padding: 30px;
+}
+button {
+    margin: 5px 0px 5px 0px;
+}
+
+.etiquetas {
+    margin-top: 5px;
+}
+
+
+.contenedor {
+    overflow: hidden;
+}
+
+.izquierda {
+    width: 40%;
+    box-sizing: border-box;
+    float: left;
+    padding: 0px 20px 0px 0px;
+}
+
+.derecha {
+    width: 60%;
+    box-sizing: border-box;
+    float: right;
+    padding: 0px 20px;
+}
+
